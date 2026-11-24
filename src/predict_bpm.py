@@ -102,7 +102,7 @@ plt.show()
 # Scale the data so its comparable on a graph
 
 features = ["RMS", "Spectral Centroid", "Spectral Bandwidth",
-            "Spectral Rolloff", "Zero Crossing Rate"]
+            "Spectral Rolloff", "Zero Crossing Rate", "Onset Strength"]
 
 from sklearn.preprocessing import StandardScaler
 
@@ -117,7 +117,7 @@ scaled_data = pd.DataFrame(scaler.fit_transform(data[variables]), columns=variab
 import matplotlib.pyplot as plt
 
 plt.plot
-plt.scatter(scaled_data["BPM"], scaled_data["Zero Crossing Rate"])
+plt.scatter(scaled_data["BPM"], scaled_data["Onset Strength"])
 plt.legend()
 plt.xlabel("BPM")
 plt.ylabel("FEATURES")
