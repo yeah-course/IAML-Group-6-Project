@@ -1,5 +1,7 @@
-clips
-data/extracted_clips/02 Cinema (Skrillex Remix) [feat. Gary Go]_clip.wav
-data/extracted_clips/Swedish_House_Mafia_ft_John_Martin_-_Dont_You_Worry_Child_Official_Video_clip.wav
-data/extracted_clips/308-tiesto-adagio_for_strings_clip.wav
-data/extracted_clips/Sebastian Ingrosso - Reload - 01 - Reload (vocal version radio edit)_clip.wav
+artist,song,audio_path,bpm
+NERO,Promises,data/extracted_clips/Nero_-_Promises_clip.wav,144
+Swedish House Mafia,Save The World,data/extracted_clips/121.Swedish House Mafia - Save The World (Radio Remix)_clip.wav,127
+Porter Robinson,Language,data/extracted_clips/Porter_Robinson_-_Language_clip.wav,128
+DJ Snake,Turn Down for What,data/extracted_clips/DJ Snake Lil Jon - Turn Down for What_clip.wav,100
+Calvin Harris,Summer ,data/extracted_clips/Calvin_Harris_-_Summer_Official_Video_clip.wav,128
+Sebastian Ingrosso,Calling (Lose My Mind),data/extracted_clips/Sebastian_Ingrosso_Alesso_-_Calling_Lose_My_Mind_ft_Ryan_Tedder_clip.wav,125

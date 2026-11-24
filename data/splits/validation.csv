@@ -1,4 +1,7 @@
-clips
-data/extracted_clips/Daft_Punk_-_One_More_Time_Official_Video_clip.wav
-data/extracted_clips/03 Summertime Sadness (Cedric Gervais Remix)_clip.wav
-data/extracted_clips/DeadMau5_-_Strobe_Radio_Edit_clip.wav
+artist,song,audio_path,bpm
+David Guetta,Titanium,data/extracted_clips/David_Guetta_-_Titanium_ft_Sia_Official_Video_clip.wav,126
+Kid Cudi,Pursuit of Happiness,data/extracted_clips/Kid_Cudi_-_Pursuit_Of_Happiness_MGMT_Ratatat_Clean_-_Extended_Steve_Aoki_Remix_clip.wav,128
+Ivan Gough,In My Mind,data/extracted_clips/Ivan_Gough_Feenixpawl_ft_Georgi_Kay_-_In_My_Mind_Axwell_Mix_OFFICIAL_VIDEO_clip.wav,128
+Eiffel 65,Blue (Da Ba Dee) - Gabry Ponte Ice Pop Mix,data/extracted_clips/Eiffel_65_-_Blue_Da_Ba_Dee_Gabry_Ponte_Ice_Pop_Mix_Original_Video_with_subtitles_clip.wav,128
+Kygo,Firestone,data/extracted_clips/Kygo_-_Firestone_ft_Conrad_Sewell_Official_Video_clip.wav,114
+Martin Garrix,Animals,data/extracted_clips/Martin_Garrix_-_Animals_Radio_Edit_clip.wav,128

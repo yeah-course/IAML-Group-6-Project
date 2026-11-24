@@ -1,9 +1,10 @@
-clips,audio_data
-data/extracted_clips/02 Cinema (Skrillex Remix) [feat. Gary Go]_clip.wav,"[-0.40063477 -0.35476685 -0.34143066 ...  0.19482422  0.28152466
-  0.40740967]"
-data/extracted_clips/Swedish_House_Mafia_ft_John_Martin_-_Dont_You_Worry_Child_Official_Video_clip.wav,"[ 0.00231934  0.03741455  0.02966309 ... -0.16369629 -0.2137146
- -0.25479126]"
-data/extracted_clips/308-tiesto-adagio_for_strings_clip.wav,"[-0.19934082 -0.2083435  -0.21316528 ...  0.17056274  0.1816101
-  0.1932373 ]"
-data/extracted_clips/Sebastian Ingrosso - Reload - 01 - Reload (vocal version radio edit)_clip.wav,"[-0.18960571 -0.06149292  0.01867676 ...  0.49102783  0.53500366
-  0.502594  ]"
+artist,song,audio_path,bpm,audio_data
+NERO,Promises,data/extracted_clips/Nero_-_Promises_clip.wav,144,"[-0.13400269 -0.17733765 -0.06201172 ... -0.07861328 -0.00521851
+  0.09008789]"
+Swedish House Mafia,Save The World,data/extracted_clips/121.Swedish House Mafia - Save The World (Radio Remix)_clip.wav,127,[0.6500244  0.51712036 0.34838867 ... 0.43023682 0.43829346 0.3494568 ]
+Porter Robinson,Language,data/extracted_clips/Porter_Robinson_-_Language_clip.wav,128,"[-0.07751465 -0.21182251 -0.10644531 ... -0.39056396 -0.45040894
+ -0.38998413]"
+DJ Snake,Turn Down for What,data/extracted_clips/DJ Snake Lil Jon - Turn Down for What_clip.wav,100,[0.377594   0.4189453  0.36190796 ... 0.19186401 0.21652222 0.25073242]
+Calvin Harris,Summer ,data/extracted_clips/Calvin_Harris_-_Summer_Official_Video_clip.wav,128,[0.16378784 0.43307495 0.5385437  ... 0.02487183 0.07421875 0.09683228]
+Sebastian Ingrosso,Calling (Lose My Mind),data/extracted_clips/Sebastian_Ingrosso_Alesso_-_Calling_Lose_My_Mind_ft_Ryan_Tedder_clip.wav,125,"[-0.30786133 -0.32937622 -0.30648804 ... -0.14233398 -0.15267944
+ -0.12802124]"

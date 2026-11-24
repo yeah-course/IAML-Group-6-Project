@@ -1,6 +1,11 @@
-clips,audio_data
-data/extracted_clips/Daft_Punk_-_One_More_Time_Official_Video_clip.wav,[0.12466431 0.07617188 0.13772583 ... 0.26287842 0.27157593 0.28704834]
-data/extracted_clips/03 Summertime Sadness (Cedric Gervais Remix)_clip.wav,"[-0.54867554 -0.5315857  -0.70129395 ...  0.24951172  0.20050049
-  0.2244873 ]"
-data/extracted_clips/DeadMau5_-_Strobe_Radio_Edit_clip.wav,"[-0.10028076 -0.10070801 -0.09985352 ... -0.06091309 -0.06283569
- -0.06317139]"
+artist,song,audio_path,bpm,audio_data
+David Guetta,Titanium,data/extracted_clips/David_Guetta_-_Titanium_ft_Sia_Official_Video_clip.wav,126,[0.03967285 0.03530884 0.03356934 ... 0.8804321  0.8162842  0.701355  ]
+Kid Cudi,Pursuit of Happiness,data/extracted_clips/Kid_Cudi_-_Pursuit_Of_Happiness_MGMT_Ratatat_Clean_-_Extended_Steve_Aoki_Remix_clip.wav,128,"[-0.1678772  -0.12234497 -0.1383667  ...  0.1619873   0.18826294
+  0.19476318]"
+Ivan Gough,In My Mind,data/extracted_clips/Ivan_Gough_Feenixpawl_ft_Georgi_Kay_-_In_My_Mind_Axwell_Mix_OFFICIAL_VIDEO_clip.wav,128,"[-0.15286255  0.01763916  0.07104492 ...  0.1793518   0.20620728
+  0.29797363]"
+Eiffel 65,Blue (Da Ba Dee) - Gabry Ponte Ice Pop Mix,data/extracted_clips/Eiffel_65_-_Blue_Da_Ba_Dee_Gabry_Ponte_Ice_Pop_Mix_Original_Video_with_subtitles_clip.wav,128,[0.09136963 0.08325195 0.06680298 ... 0.02532959 0.01620483 0.01409912]
+Kygo,Firestone,data/extracted_clips/Kygo_-_Firestone_ft_Conrad_Sewell_Official_Video_clip.wav,114,"[ 0.6298218   0.64575195  0.65945435 ... -0.22262573 -0.20565796
+ -0.15838623]"
+Martin Garrix,Animals,data/extracted_clips/Martin_Garrix_-_Animals_Radio_Edit_clip.wav,128,"[-0.3614502  -0.35943604 -0.36065674 ...  0.71398926  0.7078552
+  0.70410156]"

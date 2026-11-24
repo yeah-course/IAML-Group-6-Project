@@ -1,15 +1,26 @@
-clips
-data/extracted_clips/121.Swedish House Mafia - Save The World (Radio Remix)_clip.wav
-data/extracted_clips/Zedd_-_Clarity_ft_Foxes_clip.wav
-data/extracted_clips/Skrillex_-_Scary_Monsters_And_Nice_Sprites_Official_Audio_clip.wav
-data/extracted_clips/Levels_Radio_Edit_clip.wav
-data/extracted_clips/1.03 - Major Lazer Feat. MØ & DJ Snake - Lean On_clip.wav
-data/extracted_clips/Darude_-_Sandstorm_clip.wav
-data/extracted_clips/pacific-state_clip.wav
-data/extracted_clips/18 Epic_clip.wav
-data/extracted_clips/Heaven_clip.wav
-data/extracted_clips/DJ Snake Lil Jon - Turn Down for What_clip.wav
-data/extracted_clips/David_Guetta_-_Titanium_ft_Sia_Official_Video_clip.wav
-data/extracted_clips/Martin_Garrix_-_Animals_Radio_Edit_clip.wav
-data/extracted_clips/lush-3-1_clip.wav
-data/extracted_clips/Alice_Deejay_-_Better_Off_Alone_Official_Video_clip.wav
+artist,song,audio_path,bpm
+Daft Punk,One More Time,data/extracted_clips/Daft_Punk_-_One_More_Time_Official_Video_clip.wav,123
+Tiesto,Adagio For Strings,data/extracted_clips/308-tiesto-adagio_for_strings_clip.wav,140
+Hardwell,Spaceman - Edit,data/extracted_clips/Spaceman_Edit_clip.wav,128
+Krewella,Alive,data/extracted_clips/Krewella_-_Alive_Official_Video_clip.wav,128
+The Prodigy,Smack My Bitch Up,data/extracted_clips/Smack_My_Bitch_Up_clip.wav,136
+GIGI D'AGOSTINO,L'Amour Toujours,data/extracted_clips/GIGI_DAGOSTINO_-_LAMOUR_TOUJOURS_OFFICIAL_VIDEO_clip.wav,139
+Disclosure,Latch,data/extracted_clips/Disclosure_-_Latch_ft_Sam_Smith_Lyrics_clip.wav,122
+Avicii,Levels - Radio Edit,data/extracted_clips/Levels_Radio_Edit_clip.wav,126
+Calvin Harris,Summer ,data/extracted_clips/03 Summertime Sadness (Cedric Gervais Remix)_clip.wav,128
+Zedd,Clarity,data/extracted_clips/Zedd_-_Clarity_ft_Foxes_clip.wav,128
+Oliver Heldens,Gecko (Overdrive) - Radio Edit,data/extracted_clips/Oliver_Heldens_X_Becky_Hill_-_Gecko_Overdrive_Radio_Edit_clip.wav,125
+Swedish House Mafia,One - Radio Edit,data/extracted_clips/One_Radio_Edit_clip.wav,125
+DJ Sammy,Heaven,data/extracted_clips/Heaven_clip.wav,138
+Alan Walker,Faded,data/extracted_clips/Alan_Walker_-_Faded_clip.wav,90
+The Chainsmokers,Closer,data/extracted_clips/The_Chainsmokers_-_Closer_Lyrics_ft_Halsey_clip.wav,95
+Flux Pavillion,I Can't Stop,data/extracted_clips/Flux_Pavilion_-_I_Cant_Stop_clip.wav,140
+Avicii,Wake Me Up,data/extracted_clips/Avicii_-_Wake_Me_Up_Official_Lyric_Video_clip.wav,124
+Benny Benassi,Cinema - Skrillex Remix,data/extracted_clips/02 Cinema (Skrillex Remix) [feat. Gary Go]_clip.wav,145
+Major Lazer,Lean On,data/extracted_clips/1.03 - Major Lazer Feat. MØ & DJ Snake - Lean On_clip.wav,98
+We Found Love,Rihanna,data/extracted_clips/Rihanna_-_We_Found_Love_ft_Calvin_Harris_clip.wav,128
+Tove Lo,Habits (Stay High) - Hippie Sabotage Remix,data/extracted_clips/Tove_Lo_-_Habits_Stay_High_-_Hippie_Sabotage_Remix_clip.wav,121
+Alice Deejay,Better Off Alone,data/extracted_clips/Alice_Deejay_-_Better_Off_Alone_Official_Video_clip.wav,137
+deadmau5,Strobe - Radio Edit,data/extracted_clips/DeadMau5_-_Strobe_Radio_Edit_clip.wav,128
+Skrillex,Scary Monsters and Nice Sprites,data/extracted_clips/Skrillex_-_Scary_Monsters_And_Nice_Sprites_Official_Audio_clip.wav,140
+Cascada,Everytime We Touch,data/extracted_clips/Everytime_We_Touch_clip.wav,142
