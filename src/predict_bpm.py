@@ -117,7 +117,7 @@ scaled_data = pd.DataFrame(scaler.fit_transform(data[variables]), columns=variab
 import matplotlib.pyplot as plt
 
 plt.plot
-plt.scatter(scaled_data["BPM"], scaled_data["Spectral Rolloff"])
+plt.scatter(scaled_data["BPM"], scaled_data["Zero Crossing Rate"])
 plt.legend()
 plt.xlabel("BPM")
 plt.ylabel("FEATURES")
