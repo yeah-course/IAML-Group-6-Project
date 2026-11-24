@@ -8,118 +8,220 @@ import matplotlib.pyplot as plt
 from pathlib import Path
 from sklearn.model_selection import train_test_split
 import os
+import glob
 
+input_folder_dubstep = Path("data/extracted_clips/Dubstep")
+input_folder_jungle = Path("data/extracted_clips/Jungle")
+input_folder_house = Path("data/extracted_clips/House")
 
-# 1. LOAD AND MATCH THE DATA
+audio_files_dubstep = [
+    file for file in input_folder_dubstep.iterdir()
+    if file.suffix.lower() in [".wav", ".mp3"]
+]
+audio_files_jungle = [
+    file for file in input_folder_jungle.iterdir()
+    if file.suffix.lower() in [".wav", ".mp3"]
+]
+audio_files_house = [
+    file for file in input_folder_house.iterdir()
+    if file.suffix.lower() in [".wav", ".mp3"]
+]
 
-# Load the BPM spreadsheet
-
-audio_folder = Path("data/raw")
-spreadsheet_path = Path("data/bpm_spreadsheet.xlsx")
-
-bpm_labels = pd.read_excel(spreadsheet_path)
-print(bpm_labels.head())
-
-audio_files = os.listdir(audio_folder)
-print("Number of audio files found:", len(audio_files))
-
-# Match the datasets, remove _clip from the audio file name and .wav suffix.
-
-audio_data = pd.DataFrame({
-    "Song Title": [
-        os.path.splitext(f)[0].replace("_clip", "")
-        for f in audio_files
-    ],
-    "filename": audio_files
-})
-
-print(audio_data.head())
-print(len(audio_data))
-
-data = pd.merge(audio_data, bpm_labels, on="Song Title")
-
-print(data.head())
-
-# load the audio data numerically into an array and store it in a new column called "audio_data"
-
-audio_data_list = []
-
-for song in os.listdir(audio_folder):
-
-    filepath = os.path.join(audio_folder, song)
-
-    signal, sr = librosa.load(filepath, sr=22050, mono=True, duration=4.0)
-
-    audio_data_list.append(signal)
-
-audio_data_list = np.array(audio_data_list)
-
-print(audio_data_list.shape)
-
-# We will now write a feature extraction function that takes in a path to an audio file and returns the extracted features.
+# Define all of our extractable features
 
 def extract_features(signal, sr):
 
-    features = {
+        rms = float(np.mean(librosa.feature.rms(y=signal)))
+        spec_cen = float(np.mean(librosa.feature.spectral_centroid(y=signal, sr=sr)))
+        spec_ban = float(np.mean(librosa.feature.spectral_bandwidth(y=signal, sr=sr)))
+        spec_roll = float(np.mean(librosa.feature.spectral_rolloff(y=signal, sr=sr)))
+        zcr = float(np.mean(librosa.feature.zero_crossing_rate(y=signal)))
+        onsets = librosa.onset.onset_detect(y=signal, sr=sr)
+        onset_rate = float(len(onsets) / (len(signal) / sr))
+        ons_str_std = float(np.std(librosa.onset.onset_strength(y=signal, sr=sr)))
+        ons_str_mean = float(np.mean(librosa.onset.onset_strength(y=signal, sr=sr)))
 
-        "RMS": np.mean(librosa.feature.rms(y=signal)),
-        "Spectral Centroid": np.mean(librosa.feature.spectral_centroid(y=signal, sr=sr)),
-        "Spectral Bandwidth": np.mean(librosa.feature.spectral_bandwidth(y=signal, sr=sr)),
-        "Spectral Rolloff": np.mean(librosa.feature.spectral_rolloff(y=signal, sr=sr)),
-        "Zero Crossing Rate": np.mean(librosa.feature.zero_crossing_rate(y=signal)),
-        "Onset Strength": np.mean(librosa.onset.onset_strength(y=signal, sr=sr)),
+
+        features_list = [rms, spec_cen, spec_ban, spec_roll, zcr, ons_str_std, onset_rate, ons_str_mean]
+        return features_list
+
+keys = {"Jungle": 0, "House": 1, "Dubstep": 2}
+print(keys)
+
+dict = {"key":[], "rms":[], "spec_cent":[], "spec_ban":[], "spec_roll":[], "zcr":[], "ons_str_std":[], "onset_rate":[], "ons_str_mean": []}
+
+for file in audio_files_jungle:
+        audio, sr = librosa.load(file, sr=44100, mono=True)
+        features = extract_features(audio, 44100)
+        dict["key"].append(0)
+        dict["rms"].append(features[0])
+        dict["spec_cent"].append(features[1])
+        dict["spec_ban"].append(features[2])
+        dict["spec_roll"].append(features[3])
+        dict["zcr"].append(features[4])
+        dict["ons_str_std"].append(features[5])
+        dict["onset_rate"].append(features[6])
+        dict["ons_str_mean"].append(features[7])
 
 
-    }
-    return features
+for file in audio_files_house:
+        audio, sr = librosa.load(file, sr=44100, mono=True)
+        features = extract_features(audio, 44100)
+        dict["key"].append(1)
+        dict["rms"].append(features[0])
+        dict["spec_cent"].append(features[1])
+        dict["spec_ban"].append(features[2])
+        dict["spec_roll"].append(features[3])
+        dict["zcr"].append(features[4])
+        dict["ons_str_std"].append(features[5])
+        dict["onset_rate"].append(features[6])
+        dict["ons_str_mean"].append(features[7])
 
-features_list = []
+for file in audio_files_dubstep:
+        audio, sr = librosa.load(file, sr=44100, mono=True)
+        features = extract_features(audio, 44100)
+        dict["key"].append(2)
+        dict["rms"].append(features[0])
+        dict["spec_cent"].append(features[1])
+        dict["spec_ban"].append(features[2])
+        dict["spec_roll"].append(features[3])
+        dict["zcr"].append(features[4])
+        dict["ons_str_std"].append(features[5])
+        dict["onset_rate"].append(features[6])
+        dict["ons_str_mean"].append(features[7])
 
-for signal in audio_data_list:
-    features_list.append(extract_features(signal, sr))
+df = pd.DataFrame(dict)
 
-features_df = pd.DataFrame(features_list)
+print(df)
 
-print(features_df.head())
-print()
-print(features_df.shape)
 
-# combine features with original data
+#############
+#############
 
-data = pd.concat([data.reset_index(drop=True),
-                  features_df.reset_index(drop=True)], axis=1)
+# ANALYSE FEATURES
 
-print(data.head())
-print(data.isnull().sum())
-print(data.describe())
+# Spectral Centroid Graphs point to an interesting observation
 
-# look at feature distribution
+plt.scatter(df[df["key"] == 0]["key"],
+            df[df["key"] == 0]["spec_cent"],
+            color="green", label="Jungle")
 
-features_df.hist(figsize=(12, 8))
-plt.tight_layout()
+plt.scatter(df[df["key"] == 1]["key"],
+            df[df["key"] == 1]["spec_cent"],
+            color="blue", label="House")
+
+plt.scatter(df[df["key"] == 2]["key"],
+            df[df["key"] == 2]["spec_cent"],
+            color="red", label="Dubstep")
+
+plt.xlabel("Genre (key)")
+plt.ylabel("Spectral Centroid (Hz)")
+plt.title("Spectral Centroid by Genre")
+plt.xticks([0, 1, 2], ["Jungle", "House", "Dubstep"])
+plt.legend()
 plt.show()
 
-# Scale the data so its comparable on a graph
+# Analyze Spectral Bandwidth
 
-features = ["RMS", "Spectral Centroid", "Spectral Bandwidth",
-            "Spectral Rolloff", "Zero Crossing Rate", "Onset Strength"]
+plt.scatter(df[df["key"] == 0]["key"],
+            df[df["key"] == 0]["spec_ban"],
+            color="green", label="Jungle")
 
-from sklearn.preprocessing import StandardScaler
+plt.scatter(df[df["key"] == 1]["key"],
+            df[df["key"] == 1]["spec_ban"],
+            color="blue", label="House")
 
-variables = ["BPM"] + features
+plt.scatter(df[df["key"] == 2]["key"],
+            df[df["key"] == 2]["spec_ban"],
+            color="red", label="Dubstep")
 
-scaler = StandardScaler()
-
-scaled_data = pd.DataFrame(scaler.fit_transform(data[variables]), columns=variables)
-
-# plot the data
-
-import matplotlib.pyplot as plt
-
-plt.plot
-plt.scatter(scaled_data["BPM"], scaled_data["Onset Strength"])
+plt.xlabel("Genre (key)")
+plt.ylabel("Spectral Bandwidth (Hz)")
+plt.title("Spectral Bandwidth by Genre")
+plt.xticks([0, 1, 2], ["Jungle", "House", "Dubstep"])
 plt.legend()
-plt.xlabel("BPM")
-plt.ylabel("FEATURES")
-plt.title("RMS vs BPM")
+plt.show()
+
+# Analyse Onset Strength
+
+plt.scatter(df[df["key"] == 0]["key"],
+            df[df["key"] == 0]["ons_str_mean"],
+            color="green", label="Jungle")
+
+plt.scatter(df[df["key"] == 1]["key"],
+            df[df["key"] == 1]["ons_str_mean"],
+            color="blue", label="House")
+
+plt.scatter(df[df["key"] == 2]["key"],
+            df[df["key"] == 2]["ons_str_mean"],
+            color="red", label="Dubstep")
+
+plt.xlabel("Genre (key)")
+plt.ylabel("Onset Strength")
+plt.title("Onset Strength by Genre")
+plt.xticks([0, 1, 2], ["Jungle", "House", "Dubstep"])
+plt.legend()
+plt.show()
+
+# Analyse Onset Rate
+
+plt.scatter(df[df["key"] == 0]["key"],
+            df[df["key"] == 0]["onset_rate"],
+            color="green", label="Jungle")
+
+plt.scatter(df[df["key"] == 1]["key"],
+            df[df["key"] == 1]["onset_rate"],
+            color="blue", label="House")
+
+plt.scatter(df[df["key"] == 2]["key"],
+            df[df["key"] == 2]["onset_rate"],
+            color="red", label="Dubstep")
+
+plt.xlabel("Genre (key)")
+plt.ylabel("Onset Rate")
+plt.title("Onset Rate by Genre")
+plt.xticks([0, 1, 2], ["Jungle", "House", "Dubstep"])
+plt.legend()
+plt.show()
+
+# Plot Onset Rate Mean against Onset Rate Standard Deviation
+
+plt.plot(figsize=(16, 8))
+plt.scatter(df[df["key"] == 0]["ons_str_mean"],
+            df[df["key"] == 0]["ons_str_std"],
+            color="green", label="Jungle")
+
+plt.scatter(df[df["key"] == 1]["ons_str_mean"],
+            df[df["key"] == 1]["ons_str_std"],
+            color="blue", label="House")
+
+plt.scatter(df[df["key"] == 2]["ons_str_mean"],
+            df[df["key"] == 2]["ons_str_std"],
+            color="red", label="Dubstep")
+
+plt.xlabel("Mean Onset Strength")
+plt.ylabel("StDev Onset Strength")
+plt.title("Onset Strength by Genre")
+plt.legend()
+plt.show()
+
+# Plot Spectral Centroid against Spectral Bandwidth
+
+plt.plot(figsize=(16, 8))
+plt.scatter(df[df["key"] == 0]["spec_cent"],
+            df[df["key"] == 0]["spec_ban"],
+            color="green", label="Jungle")
+
+plt.scatter(df[df["key"] == 1]["spec_cent"],
+            df[df["key"] == 1]["spec_ban"],
+            color="blue", label="House")
+
+plt.scatter(df[df["key"] == 2]["spec_cent"],
+            df[df["key"] == 2]["spec_ban"],
+            color="red", label="Dubstep")
+
+plt.xlabel("Spectral Centroid (Hz)")
+plt.ylabel("Spectral Bandwidth (Hz)")
+plt.title("Spectral Features by Genre")
+plt.legend()
 plt.show()
