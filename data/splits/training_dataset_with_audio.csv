@@ -1,24 +1,45 @@
-clips,audio_data
-data/extracted_clips/121.Swedish House Mafia - Save The World (Radio Remix)_clip.wav,[0.6500244  0.51712036 0.34838867 ... 0.43023682 0.43829346 0.3494568 ]
-data/extracted_clips/Zedd_-_Clarity_ft_Foxes_clip.wav,[0.11236572 0.15353394 0.23428345 ... 0.12921143 0.127594   0.10317993]
-data/extracted_clips/Skrillex_-_Scary_Monsters_And_Nice_Sprites_Official_Audio_clip.wav,"[-0.46896362 -0.5614929  -0.7150879  ... -0.15588379 -0.09042358
- -0.02270508]"
-data/extracted_clips/Levels_Radio_Edit_clip.wav,"[ 0.46432495  0.5035095   0.51831055 ... -0.46392822 -0.41540527
+artist,song,audio_path,bpm,audio_data
+Daft Punk,One More Time,data/extracted_clips/Daft_Punk_-_One_More_Time_Official_Video_clip.wav,123,[0.12466431 0.07617188 0.13772583 ... 0.26287842 0.27157593 0.28704834]
+Tiesto,Adagio For Strings,data/extracted_clips/308-tiesto-adagio_for_strings_clip.wav,140,"[-0.19934082 -0.2083435  -0.21316528 ...  0.17056274  0.1816101
+  0.1932373 ]"
+Hardwell,Spaceman - Edit,data/extracted_clips/Spaceman_Edit_clip.wav,128,"[ 0.86816406  0.8296509   0.76187134 ... -0.08239746 -0.23950195
+ -0.16925049]"
+Krewella,Alive,data/extracted_clips/Krewella_-_Alive_Official_Video_clip.wav,128,"[-0.32391357 -0.14346313  0.0369873  ... -0.11251831 -0.0899353
+ -0.15274048]"
+The Prodigy,Smack My Bitch Up,data/extracted_clips/Smack_My_Bitch_Up_clip.wav,136,"[ 0.25601196  0.17822266 -0.03839111 ... -0.24520874 -0.19830322
+ -0.10327148]"
+GIGI D'AGOSTINO,L'Amour Toujours,data/extracted_clips/GIGI_DAGOSTINO_-_LAMOUR_TOUJOURS_OFFICIAL_VIDEO_clip.wav,139,[0.24667358 0.14932251 0.08239746 ... 0.4048462  0.44519043 0.5086365 ]
+Disclosure,Latch,data/extracted_clips/Disclosure_-_Latch_ft_Sam_Smith_Lyrics_clip.wav,122,"[-0.5588989  -0.62213135 -0.6676636  ... -0.06674194 -0.09555054
+ -0.12731934]"
+Avicii,Levels - Radio Edit,data/extracted_clips/Levels_Radio_Edit_clip.wav,126,"[ 0.46432495  0.5035095   0.51831055 ... -0.46392822 -0.41540527
  -0.3814392 ]"
-data/extracted_clips/1.03 - Major Lazer Feat. MØ & DJ Snake - Lean On_clip.wav,"[ 0.06881714  0.02563477 -0.0128479  ... -0.48947144 -0.46813965
- -0.41467285]"
-data/extracted_clips/Darude_-_Sandstorm_clip.wav,"[-0.09002686 -0.06472778 -0.06970215 ... -0.10577393 -0.12002563
- -0.10458374]"
-data/extracted_clips/pacific-state_clip.wav,"[ 0.19638062  0.26287842  0.24832153 ... -0.00512695 -0.01330566
- -0.00708008]"
-data/extracted_clips/18 Epic_clip.wav,"[ 0.97717285  0.97561646  0.9751282  ... -0.27148438 -0.27200317
- -0.2657776 ]"
-data/extracted_clips/Heaven_clip.wav,"[ 0.06005859  0.01690674  0.06018066 ... -0.09036255 -0.08172607
+Calvin Harris,Summer ,data/extracted_clips/03 Summertime Sadness (Cedric Gervais Remix)_clip.wav,128,"[-0.54867554 -0.5315857  -0.70129395 ...  0.24951172  0.20050049
+  0.2244873 ]"
+Zedd,Clarity,data/extracted_clips/Zedd_-_Clarity_ft_Foxes_clip.wav,128,[0.11236572 0.15353394 0.23428345 ... 0.12921143 0.127594   0.10317993]
+Oliver Heldens,Gecko (Overdrive) - Radio Edit,data/extracted_clips/Oliver_Heldens_X_Becky_Hill_-_Gecko_Overdrive_Radio_Edit_clip.wav,125,[0.35028076 0.37802124 0.47348022 ... 0.24365234 0.23416138 0.22418213]
+Swedish House Mafia,One - Radio Edit,data/extracted_clips/One_Radio_Edit_clip.wav,125,"[-0.27661133 -0.2338562  -0.10220337 ... -0.35186768 -0.39016724
+ -0.46206665]"
+DJ Sammy,Heaven,data/extracted_clips/Heaven_clip.wav,138,"[ 0.06005859  0.01690674  0.06018066 ... -0.09036255 -0.08172607
  -0.09222412]"
-data/extracted_clips/DJ Snake Lil Jon - Turn Down for What_clip.wav,[0.377594   0.4189453  0.36190796 ... 0.19186401 0.21652222 0.25073242]
-data/extracted_clips/David_Guetta_-_Titanium_ft_Sia_Official_Video_clip.wav,[0.03967285 0.03530884 0.03356934 ... 0.8804321  0.8162842  0.701355  ]
-data/extracted_clips/Martin_Garrix_-_Animals_Radio_Edit_clip.wav,"[-0.3614502  -0.35943604 -0.36065674 ...  0.71398926  0.7078552
-  0.70410156]"
-data/extracted_clips/lush-3-1_clip.wav,[0.09991455 0.11621094 0.13739014 ... 0.40896606 0.37973022 0.3095398 ]
-data/extracted_clips/Alice_Deejay_-_Better_Off_Alone_Official_Video_clip.wav,"[ 0.10629272 -0.18634033 -0.0953064  ...  0.5156555   0.50808716
+Alan Walker,Faded,data/extracted_clips/Alan_Walker_-_Faded_clip.wav,90,"[ 0.19396973  0.16363525  0.13729858 ... -0.13607788  0.23590088
+ -0.03137207]"
+The Chainsmokers,Closer,data/extracted_clips/The_Chainsmokers_-_Closer_Lyrics_ft_Halsey_clip.wav,95,"[ 0.17770386  0.15725708  0.15325928 ... -0.08297729 -0.05517578
+ -0.04360962]"
+Flux Pavillion,I Can't Stop,data/extracted_clips/Flux_Pavilion_-_I_Cant_Stop_clip.wav,140,[0.32144165 0.28372192 0.04318237 ... 0.18734741 0.25213623 0.20108032]
+Avicii,Wake Me Up,data/extracted_clips/Avicii_-_Wake_Me_Up_Official_Lyric_Video_clip.wav,124,[0.06167603 0.0423584  0.01205444 ... 0.36871338 0.42303467 0.36746216]
+Benny Benassi,Cinema - Skrillex Remix,data/extracted_clips/02 Cinema (Skrillex Remix) [feat. Gary Go]_clip.wav,145,"[-0.40063477 -0.35476685 -0.34143066 ...  0.19482422  0.28152466
+  0.40740967]"
+Major Lazer,Lean On,data/extracted_clips/1.03 - Major Lazer Feat. MØ & DJ Snake - Lean On_clip.wav,98,"[ 0.06881714  0.02563477 -0.0128479  ... -0.48947144 -0.46813965
+ -0.41467285]"
+We Found Love,Rihanna,data/extracted_clips/Rihanna_-_We_Found_Love_ft_Calvin_Harris_clip.wav,128,"[-0.15536499 -0.15258789 -0.14276123 ... -0.11862183 -0.07089233
+ -0.0826416 ]"
+Tove Lo,Habits (Stay High) - Hippie Sabotage Remix,data/extracted_clips/Tove_Lo_-_Habits_Stay_High_-_Hippie_Sabotage_Remix_clip.wav,121,"[ 0.34848022  0.3821411   0.39559937 ... -0.16052246 -0.12057495
+ -0.10552979]"
+Alice Deejay,Better Off Alone,data/extracted_clips/Alice_Deejay_-_Better_Off_Alone_Official_Video_clip.wav,137,"[ 0.10629272 -0.18634033 -0.0953064  ...  0.5156555   0.50808716
   0.5217285 ]"
+deadmau5,Strobe - Radio Edit,data/extracted_clips/DeadMau5_-_Strobe_Radio_Edit_clip.wav,128,"[-0.10028076 -0.10070801 -0.09985352 ... -0.06091309 -0.06283569
+ -0.06317139]"
+Skrillex,Scary Monsters and Nice Sprites,data/extracted_clips/Skrillex_-_Scary_Monsters_And_Nice_Sprites_Official_Audio_clip.wav,140,"[-0.46896362 -0.5614929  -0.7150879  ... -0.15588379 -0.09042358
+ -0.02270508]"
+Cascada,Everytime We Touch,data/extracted_clips/Everytime_We_Touch_clip.wav,142,"[-0.20751953 -0.20318604 -0.15686035 ... -0.337677   -0.33319092
+ -0.28494263]"
