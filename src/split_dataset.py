@@ -66,34 +66,3 @@ for data_type, file_path in data.items():
 
 # Our usable data is in loaded_data, which is a dictionary containing the training, validation, and testing datasets with the audio data included. 
 # Each dataset is a pandas DataFrame with two columns: "clips" (the paths to the audio clips) and "audio_data" (the extracted audio data as numpy arrays).
-
-# end of data split.
-
-# WHAT FEATURES ARE WE GOING TO EXTRACT?
-# 1) Onset Envelope Strength
-# 2) Onset Intervals
-# 3) RMS Energy
-# 4) Low-frequency Energy
-# 5) Spectral Flux
-# 6) Autocorrelation
-
-# Spectral Centroid
-
-centroid_values = []
-
-for file in dataset["audio_data"]:
-    centroid = librosa.feature.spectral_centroid(y=file, sr=sr)
-    average_centroid = np.mean(centroid)
-    centroid_values.append(average_centroid)
-
-dataset["Mean Spectral Centroid"] = centroid_values
-
-import matplotlib.pyplot as plt
-
-plt.figure(figsize=(10, 6))
-
-plt.scatter(dataset["Mean Spectral Centroid"], dataset["bpm"])
-plt.xlabel("Mean Spectral Centroid")
-plt.ylabel("BPM")
-plt.title("Relationship between Spectral Centroid and BPM")
-plt.show()
