@@ -48,12 +48,13 @@ def extract_features(signal, sr):
 keys = {"Jungle": 0, "House": 1, "Dubstep": 2}
 print(keys)
 
-dict = {"key":[], "rms":[], "spec_cent":[], "spec_ban":[], "spec_roll":[], "zcr":[], "ons_str_std":[], "onset_rate":[], "ons_str_mean": []}
+dict = {"rms":[], "spec_cent":[], "spec_ban":[], "spec_roll":[], "zcr":[], "ons_str_std":[], "onset_rate":[], "ons_str_mean": []}
+keys = []
 
 for file in audio_files_jungle:
         audio, sr = librosa.load(file, sr=44100, mono=True)
         features = extract_features(audio, 44100)
-        dict["key"].append(0)
+        keys.append(0)
         dict["rms"].append(features[0])
         dict["spec_cent"].append(features[1])
         dict["spec_ban"].append(features[2])
@@ -67,7 +68,7 @@ for file in audio_files_jungle:
 for file in audio_files_house:
         audio, sr = librosa.load(file, sr=44100, mono=True)
         features = extract_features(audio, 44100)
-        dict["key"].append(1)
+        keys.append(1)
         dict["rms"].append(features[0])
         dict["spec_cent"].append(features[1])
         dict["spec_ban"].append(features[2])
@@ -80,7 +81,7 @@ for file in audio_files_house:
 for file in audio_files_dubstep:
         audio, sr = librosa.load(file, sr=44100, mono=True)
         features = extract_features(audio, 44100)
-        dict["key"].append(2)
+        keys.append(2)
         dict["rms"].append(features[0])
         dict["spec_cent"].append(features[1])
         dict["spec_ban"].append(features[2])
@@ -90,9 +91,9 @@ for file in audio_files_dubstep:
         dict["onset_rate"].append(features[6])
         dict["ons_str_mean"].append(features[7])
 
-df = pd.DataFrame(dict)
+df = pd.DataFrame(dict)[["rms", "spec_cent", "ons_str_mean"]]
+y = np.array(keys)
 
-print(df)
 
 
 #############
@@ -102,166 +103,93 @@ print(df)
 
 # Analyse RMS
 
-plt.scatter(df[df["key"] == 0]["key"],
-            df[df["key"] == 0]["rms"],
-            color="green", label="Jungle")
+def scatter_features(x, y):
 
-plt.scatter(df[df["key"] == 1]["key"],
-            df[df["key"] == 1]["rms"],
-            color="blue", label="House")
+        fig, ax = plt.subplots()
 
-plt.scatter(df[df["key"] == 2]["key"],
-            df[df["key"] == 2]["rms"],
-            color="red", label="Dubstep")
+        ax.scatter(x, y)
+        ax.set_xlabel(f'{x}')
+        ax.set_ylabel(f'{y}')
+        plt.legend()
+        ax.set_title(f'{x} vs {y}')
 
-plt.xlabel("Genre (key)")
-plt.ylabel("RMS")
-plt.title("RMS by Genre")
-plt.xticks([0, 1, 2], ["Jungle", "House", "Dubstep"])
-plt.legend()
-plt.show()
+        return fig
+
+fig = (scatter_features(df["spec_cent"], df["ons_str_mean"]))
 
 
-# Spectral Centroid Graphs point to an interesting observation
 
-plt.scatter(df[df["key"] == 0]["key"],
-            df[df["key"] == 0]["spec_cent"],
-            color="green", label="Jungle")
+###########
+###########
 
-plt.scatter(df[df["key"] == 1]["key"],
-            df[df["key"] == 1]["spec_cent"],
-            color="blue", label="House")
+# Important Features: Spectral Centroid vs Mean Onset Strength
+# Import Features: RMS vs Spectral Centroid
 
-plt.scatter(df[df["key"] == 2]["key"],
-            df[df["key"] == 2]["spec_cent"],
-            color="red", label="Dubstep")
+import sklearn
+from sklearn.metrics import accuracy_score, confusion_matrix
 
-plt.xlabel("Genre (key)")
-plt.ylabel("Spectral Centroid (Hz)")
-plt.title("Spectral Centroid by Genre")
-plt.xticks([0, 1, 2], ["Jungle", "House", "Dubstep"])
-plt.legend()
-plt.show()
 
-# Analyze Spectral Bandwidth
+dict_train, dict_remaining, y_train, y_remaining = sklearn.model_selection.train_test_split(df, y, train_size = 0.7, random_state = 42, stratify = y)
+dict_val, dict_test, y_val, y_test = sklearn.model_selection.train_test_split(dict_remaining, y_remaining, train_size = 0.5, random_state = 42, stratify = y_remaining)
 
-plt.scatter(df[df["key"] == 0]["key"],
-            df[df["key"] == 0]["spec_ban"],
-            color="green", label="Jungle")
+print(dict_train)
+print(y_train)
 
-plt.scatter(df[df["key"] == 1]["key"],
-            df[df["key"] == 1]["spec_ban"],
-            color="blue", label="House")
 
-plt.scatter(df[df["key"] == 2]["key"],
-            df[df["key"] == 2]["spec_ban"],
-            color="red", label="Dubstep")
+k_values = [1, 3, 5, 9, 15]
+train_accuracy_knn = []
+val_accuracy_log = []
+val_accuracy_knn = []
+test_accuracy_best_knn = []
 
-plt.xlabel("Genre (key)")
-plt.ylabel("Spectral Bandwidth (Hz)")
-plt.title("Spectral Bandwidth by Genre")
-plt.xticks([0, 1, 2], ["Jungle", "House", "Dubstep"])
-plt.legend()
-plt.show()
 
-# Analyse Onset Strength
+# k-NN Algorithm Training
 
-plt.scatter(df[df["key"] == 0]["key"],
-            df[df["key"] == 0]["ons_str_mean"],
-            color="green", label="Jungle")
+from sklearn.preprocessing import StandardScaler
 
-plt.scatter(df[df["key"] == 1]["key"],
-            df[df["key"] == 1]["ons_str_mean"],
-            color="blue", label="House")
+scaler = StandardScaler()
 
-plt.scatter(df[df["key"] == 2]["key"],
-            df[df["key"] == 2]["ons_str_mean"],
-            color="red", label="Dubstep")
+dict_train_scaled = scaler.fit_transform(dict_train)
+dict_val_scaled = scaler.transform(dict_val)
+dict_test_scaled = scaler.transform(dict_test)
 
-plt.xlabel("Genre (key)")
-plt.ylabel("Onset Strength")
-plt.title("Onset Strength by Genre")
-plt.xticks([0, 1, 2], ["Jungle", "House", "Dubstep"])
-plt.legend()
-plt.show()
 
-# Analyse Onset Rate
+for k in k_values:
+    knn_model = sklearn.neighbors.KNeighborsClassifier(n_neighbors=k)
+    knn_model.fit(dict_train_scaled, y_train)
 
-plt.scatter(df[df["key"] == 0]["key"],
-            df[df["key"] == 0]["onset_rate"],
-            color="green", label="Jungle")
+    # test how well it performs on training data
 
-plt.scatter(df[df["key"] == 1]["key"],
-            df[df["key"] == 1]["onset_rate"],
-            color="blue", label="House")
+    y_train_pred_knn = knn_model.predict(dict_train_scaled)
+    train_accuracy_score_knn = sklearn.metrics.accuracy_score(y_train, y_train_pred_knn)
+    train_accuracy_knn.append(train_accuracy_score_knn)
 
-plt.scatter(df[df["key"] == 2]["key"],
-            df[df["key"] == 2]["onset_rate"],
-            color="red", label="Dubstep")
+    # test how well it performs on validation data
 
-plt.xlabel("Genre (key)")
-plt.ylabel("Onset Rate")
-plt.title("Onset Rate by Genre")
-plt.xticks([0, 1, 2], ["Jungle", "House", "Dubstep"])
-plt.legend()
-plt.show()
+    y_val_pred_knn = knn_model.predict(dict_val_scaled)
+    val_accuracy_score_knn = sklearn.metrics.accuracy_score(y_val, y_val_pred_knn)
+    val_accuracy_knn.append(val_accuracy_score_knn)
 
-# Plot Onset Rate Mean against Onset Rate Standard Deviation
+print()
+print("k-NN training data accuracy (for k = [1, 3, 5, 9, 15]):\n", train_accuracy_knn)
+print()
+print("k-NN validation data accuracy (for k = [1, 3, 5, 9, 15]):\n", val_accuracy_knn)
+print()
 
-plt.scatter(df[df["key"] == 0]["ons_str_mean"],
-            df[df["key"] == 0]["ons_str_std"],
-            color="green", label="Jungle")
+best_k = 5
 
-plt.scatter(df[df["key"] == 1]["ons_str_mean"],
-            df[df["key"] == 1]["ons_str_std"],
-            color="blue", label="House")
+best_knn_model = sklearn.neighbors.KNeighborsClassifier(n_neighbors=9)
+best_knn_model.fit(dict_train_scaled, y_train)
+y_test_pred_knn = best_knn_model.predict(dict_test_scaled)
+test_accuracy_score_knn = sklearn.metrics.accuracy_score(y_test, y_test_pred_knn)
+test_accuracy_best_knn.append(test_accuracy_score_knn)
 
-plt.scatter(df[df["key"] == 2]["ons_str_mean"],
-            df[df["key"] == 2]["ons_str_std"],
-            color="red", label="Dubstep")
+print("Test Accuracy Score:", test_accuracy_score_knn)
 
-plt.xlabel("Mean Onset Strength")
-plt.ylabel("StDev Onset Strength")
-plt.title("Onset Strength by Genre")
-plt.legend()
-plt.show()
 
-# Plot Spectral Centroid against Spectral Bandwidth
 
-plt.scatter(df[df["key"] == 0]["spec_cent"],
-            df[df["key"] == 0]["ons_str_mean"],
-            color="green", label="Jungle")
 
-plt.scatter(df[df["key"] == 1]["spec_cent"],
-            df[df["key"] == 1]["ons_str_mean"],
-            color="blue", label="House")
 
-plt.scatter(df[df["key"] == 2]["spec_cent"],
-            df[df["key"] == 2]["ons_str_mean"],
-            color="red", label="Dubstep")
-plt.xlabel("Spectral Centroid (Hz)")
-plt.ylabel("Mean Onset Strength")
-plt.title("Spectral Centroid vs Mean Onset Strength")
-plt.legend()
-plt.show()
 
-# Plot RMS against Spectral Centroid
 
-plt.scatter(df[df["key"] == 0]["rms"],
-            df[df["key"] == 0]["spec_cent"],
-            color="green", label="Jungle")
-
-plt.scatter(df[df["key"] == 1]["rms"],
-            df[df["key"] == 1]["spec_cent"],
-            color="blue", label="House")
-
-plt.scatter(df[df["key"] == 2]["rms"],
-            df[df["key"] == 2]["spec_cent"],
-            color="red", label="Dubstep")
-
-plt.xlabel("RMS")
-plt.ylabel("Spectral Centroid")
-plt.title("RMS vs Spectral Centroid")
-plt.legend()
-plt.show()
 
