@@ -100,6 +100,28 @@ print(df)
 
 # ANALYSE FEATURES
 
+# Analyse RMS
+
+plt.scatter(df[df["key"] == 0]["key"],
+            df[df["key"] == 0]["rms"],
+            color="green", label="Jungle")
+
+plt.scatter(df[df["key"] == 1]["key"],
+            df[df["key"] == 1]["rms"],
+            color="blue", label="House")
+
+plt.scatter(df[df["key"] == 2]["key"],
+            df[df["key"] == 2]["rms"],
+            color="red", label="Dubstep")
+
+plt.xlabel("Genre (key)")
+plt.ylabel("RMS")
+plt.title("RMS by Genre")
+plt.xticks([0, 1, 2], ["Jungle", "House", "Dubstep"])
+plt.legend()
+plt.show()
+
+
 # Spectral Centroid Graphs point to an interesting observation
 
 plt.scatter(df[df["key"] == 0]["key"],
@@ -186,7 +208,6 @@ plt.show()
 
 # Plot Onset Rate Mean against Onset Rate Standard Deviation
 
-plt.plot(figsize=(16, 8))
 plt.scatter(df[df["key"] == 0]["ons_str_mean"],
             df[df["key"] == 0]["ons_str_std"],
             color="green", label="Jungle")
@@ -207,21 +228,40 @@ plt.show()
 
 # Plot Spectral Centroid against Spectral Bandwidth
 
-plt.plot(figsize=(16, 8))
 plt.scatter(df[df["key"] == 0]["spec_cent"],
-            df[df["key"] == 0]["spec_ban"],
+            df[df["key"] == 0]["ons_str_mean"],
             color="green", label="Jungle")
 
 plt.scatter(df[df["key"] == 1]["spec_cent"],
-            df[df["key"] == 1]["spec_ban"],
+            df[df["key"] == 1]["ons_str_mean"],
             color="blue", label="House")
 
 plt.scatter(df[df["key"] == 2]["spec_cent"],
-            df[df["key"] == 2]["spec_ban"],
+            df[df["key"] == 2]["ons_str_mean"],
             color="red", label="Dubstep")
-
 plt.xlabel("Spectral Centroid (Hz)")
-plt.ylabel("Spectral Bandwidth (Hz)")
-plt.title("Spectral Features by Genre")
+plt.ylabel("Mean Onset Strength")
+plt.title("Spectral Centroid vs Mean Onset Strength")
 plt.legend()
 plt.show()
+
+# Plot RMS against Spectral Centroid
+
+plt.scatter(df[df["key"] == 0]["rms"],
+            df[df["key"] == 0]["spec_cent"],
+            color="green", label="Jungle")
+
+plt.scatter(df[df["key"] == 1]["rms"],
+            df[df["key"] == 1]["spec_cent"],
+            color="blue", label="House")
+
+plt.scatter(df[df["key"] == 2]["rms"],
+            df[df["key"] == 2]["spec_cent"],
+            color="red", label="Dubstep")
+
+plt.xlabel("RMS")
+plt.ylabel("Spectral Centroid")
+plt.title("RMS vs Spectral Centroid")
+plt.legend()
+plt.show()
+
