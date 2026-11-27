@@ -44,6 +44,8 @@ def extract_features(signal, sr):
         mfccs = librosa.feature.mfcc(y=signal, sr=sr, n_mfcc=13)
         mfcc_mean = float(np.mean(mfccs))
         mfcc_std = float(np.std(mfccs))
+        t, beat_frames = librosa.beat.beat_track(y=signal, sr=sr)
+        tempo = float(t[0])
 
 
         features_list = [rms, 
@@ -55,7 +57,8 @@ def extract_features(signal, sr):
                          ons_str_mean, 
                          rms_std, 
                          mfcc_mean, 
-                         mfcc_std]
+                         mfcc_std,
+                         tempo]
         return features_list
 
 keys = {"Jungle": 0, "House": 1, "Dubstep": 2}
@@ -71,7 +74,8 @@ dict = {"rms":[],
         "ons_str_mean": [], 
         "rms_std":[],
         "mfcc_mean":[],
-        "mfcc_std":[]}
+        "mfcc_std":[],
+        "tempo":[]}
 keys = []
 
 for file in audio_files_jungle:
@@ -89,6 +93,10 @@ for file in audio_files_jungle:
         dict["rms_std"].append(features[8])
         dict["mfcc_mean"].append(features[9])
         dict["mfcc_std"].append(features[10])
+        if features[11] < 100:
+              dict["tempo"].append(2 * float(features[11]))
+        else:
+            dict["tempo"].append(features[11])
 
 
 for file in audio_files_house:
@@ -106,6 +114,12 @@ for file in audio_files_house:
         dict["rms_std"].append(features[8])
         dict["mfcc_mean"].append(features[9])
         dict["mfcc_std"].append(features[10])
+        if features[11] < 75:
+              dict["tempo"].append(2 * float(features[11]))
+        elif features[11] > 160:
+              dict["tempo"].append(0.5 * float(features[11]))
+        else:
+            dict["tempo"].append(features[11])
 
 for file in audio_files_dubstep:
         audio, sr = librosa.load(file, sr=44100, mono=True)
@@ -122,9 +136,16 @@ for file in audio_files_dubstep:
         dict["rms_std"].append(features[8])
         dict["mfcc_mean"].append(features[9])
         dict["mfcc_std"].append(features[10])
+        dict["tempo"].append(features[11])
 
-df = pd.DataFrame(dict)
+df = pd.DataFrame(dict)[[
+                         "onset_rate",
+                         "rms_std",
+                         "mfcc_std",
+                         "tempo"]]
 y = np.array(keys)
+
+print(df)
 
 #############
 #############
@@ -150,7 +171,6 @@ print("Standard deviation:", scores.std())
 
 # SCATTER PLOT FUNCTION
 
-'''
 
 def scatter_features(x, y_feature, labels, x_name, y_name):
 
@@ -180,27 +200,25 @@ def scatter_features(x, y_feature, labels, x_name, y_name):
 
     return fig
 
-'''
 
 ##############
 ##############
 
 # FEATURE SCATTER PLOTS
 
-'''
-fig = scatter_features(df["rms"].to_numpy(), df["mfcc_mean"].to_numpy(), y, "RMS", "AVERAGE MFCC")
+
+fig = scatter_features(y, df["tempo"].to_numpy(), y, "Key", "Tempo")
 plt.show()
 
-fig = scatter_features(df["rms"].to_numpy(), df["mfcc_std"].to_numpy(), y, "RMS", "STDEV MFCC")
+fig = scatter_features(df["tempo"].to_numpy(), df["rms_std"], y, "Tempo", "StDev RMS")
 plt.show()
 
-fig = scatter_features(df["spec_cent"].to_numpy(), df["mfcc_mean"].to_numpy(), y, "Spectral Centroid", "MEAN MFCC")
+fig = scatter_features(df["tempo"].to_numpy(), df["mfcc_std"], y, "Tempo", "StDev MFCC")
 plt.show()
 
-fig = scatter_features(df["spec_cent"].to_numpy(), df["mfcc_std"].to_numpy(), y, "Spectral Centroid", "STDEV MFCC")
+fig = scatter_features(df["tempo"].to_numpy(), df["onset_rate"], y, "Tempo", "Onset Rate")
 plt.show()
 
-'''
 
 ###########
 ###########
@@ -242,6 +260,9 @@ import numpy as np
 
 from sklearn.dummy import DummyClassifier
 
+
+'''
+
 # K-NN ALGORITHM WITH REPEATED STRATIFIED K-FOLD
 
 
@@ -250,6 +271,7 @@ from sklearn.dummy import DummyClassifier
 cv = RepeatedStratifiedKFold(n_splits=5, n_repeats=10, random_state=42)
 
 # Test different values of k
+
 
 k_values = [1, 3, 5, 9, 15]
 
@@ -306,14 +328,14 @@ for k in k_values:
     val_accuracy_score_knn = sklearn.metrics.accuracy_score(y_val, y_val_pred_knn)
     val_accuracy_knn.append(val_accuracy_score_knn)
 
-# print()
-# print("k-NN training data accuracy (for k = [1, 3, 5, 9, 15]):\n", train_accuracy_knn)
-# print()
-# print("k-NN validation data accuracy (for k = [1, 3, 5, 9, 15]):\n", val_accuracy_knn)
-# print()
+print()
+print("k-NN training data accuracy (for k = [1, 3, 5, 9, 15]):\n", train_accuracy_knn)
+print()
+print("k-NN validation data accuracy (for k = [1, 3, 5, 9, 15]):\n", val_accuracy_knn)
+print()
 
 
-best_knn_model = sklearn.neighbors.KNeighborsClassifier(n_neighbors=3)
+best_knn_model = sklearn.neighbors.KNeighborsClassifier(n_neighbors=15)
 best_knn_model.fit(dict_train_scaled, y_train)
 y_test_pred_knn = best_knn_model.predict(dict_test_scaled)
 test_accuracy_score_knn = sklearn.metrics.accuracy_score(y_test, y_test_pred_knn)
@@ -329,12 +351,17 @@ cm = confusion_matrix(y_test, y_test_pred_knn)
 print("Confusion Matrix for k-NN (n=5) on Test Data:\n", cm)
 print()
 
-'''
 
 # RANDOM FOREST CLASSIFIER
 
-n_estimators_list = [50, 100, 150, 200, 250, 300, 350,]
-forrest_cv_results = []
+n_estimators = [1, 5, 7, 9, 11, 13, 200]
+forest_data_val = []
+forest_data_train = []
+
+'''
+forest_dict = {"n_estimators_list" : [50, 100, 150, 200, 250, 300, 350],
+                "forest_cv_results" : []}
+'''
 
 cv = RepeatedStratifiedKFold(
     n_splits=5,
@@ -342,18 +369,32 @@ cv = RepeatedStratifiedKFold(
     random_state=42
 )
 
-for n in n_estimators_list:
+for n in n_estimators:
 
     rf_model = sklearn.ensemble.RandomForestClassifier(n_estimators=n, max_depth=3, min_samples_split=5, min_samples_leaf=3, random_state=42)
+    rf_model.fit(dict_train, y_train)
+    y_train_pred = rf_model.predict(dict_train)
+    forest_data_train.append(accuracy_score(y_train, y_train_pred))
 
-# Run cross-validation
-    rf_scores = cross_val_score(rf_model, dict_train, y_train, cv=cv, scoring="accuracy")
+    y_val_pred = rf_model.predict(dict_val)
+    forest_data_val.append(accuracy_score(y_val, y_val_pred))
 
-    forrest_cv_results.append(rf_scores)
+print("Forest Data Validation Accuracy:", forest_data_val)
+print("Forest Data Training Accuracy:", forest_data_train)
 
-    print(f"\nn = {n}")
-    print("Average validation accuracy:", np.mean(rf_scores))
-    print("Standard deviation:", np.std(rf_scores))
+########
+########
 
+# Best Model on Test Data
 
+best_rf_model = sklearn.ensemble.RandomForestClassifier(n_estimators=300, max_depth=3, min_samples_split=5, min_samples_leaf=3, random_state=42)
+best_rf_model.fit(dict_train, y_train)
+y_test_predict = best_rf_model.predict(dict_test)
+test_accuracy_score_rf = sklearn.metrics.accuracy_score(y_test, y_test_predict)
+
+print("Test Accuracy Score:", test_accuracy_score_rf)
+
+cm1 = confusion_matrix(y_test, y_test_predict)
+print("Confusion Matrix for Random Forest Classifier on Test Data:\n", cm1)
+print()
 
