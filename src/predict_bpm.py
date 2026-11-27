@@ -150,6 +150,8 @@ print("Standard deviation:", scores.std())
 
 # SCATTER PLOT FUNCTION
 
+'''
+
 def scatter_features(x, y_feature, labels, x_name, y_name):
 
     fig, ax = plt.subplots()
@@ -178,12 +180,14 @@ def scatter_features(x, y_feature, labels, x_name, y_name):
 
     return fig
 
+'''
+
 ##############
 ##############
 
 # FEATURE SCATTER PLOTS
 
-
+'''
 fig = scatter_features(df["rms"].to_numpy(), df["mfcc_mean"].to_numpy(), y, "RMS", "AVERAGE MFCC")
 plt.show()
 
@@ -195,6 +199,8 @@ plt.show()
 
 fig = scatter_features(df["spec_cent"].to_numpy(), df["mfcc_std"].to_numpy(), y, "Spectral Centroid", "STDEV MFCC")
 plt.show()
+
+'''
 
 ###########
 ###########
@@ -264,14 +270,6 @@ for k in k_values:
     print("Average validation accuracy:", np.mean(scores))
     print("Standard deviation:", np.std(scores))
 
-# DUMMY MODEL
-
-dummy_model = DummyClassifier(strategy="most_frequent")
-
-scores = cross_val_score(dummy_model, dict_train, y_train, cv=cv, scoring="accuracy")
-
-print("Dummy validation accuracy:", np.mean(scores))
-
 
 '''
 
@@ -335,34 +333,27 @@ print()
 
 # RANDOM FOREST CLASSIFIER
 
+n_estimators_list = [50, 100, 150, 200, 250, 300, 350,]
+forrest_cv_results = []
+
 cv = RepeatedStratifiedKFold(
     n_splits=5,
     n_repeats=10,
     random_state=42
 )
 
-rf_model = sklearn.ensemble.RandomForestClassifier(
-    n_estimators=100,
-    max_depth=3,
-    min_samples_split=5,
-    min_samples_leaf=3,
-    random_state=42
-)
+for n in n_estimators_list:
+
+    rf_model = sklearn.ensemble.RandomForestClassifier(n_estimators=n, max_depth=3, min_samples_split=5, min_samples_leaf=3, random_state=42)
 
 # Run cross-validation
-rf_scores = cross_val_score(
-    rf_model,
-    dict_train,
-    y_train,
-    cv=cv,
-    scoring="accuracy"
-)
+    rf_scores = cross_val_score(rf_model, dict_train, y_train, cv=cv, scoring="accuracy")
 
-# Display results
-print("Random Forest Cross-Validation Results:")
-print("Individual accuracies:", rf_scores)
-print("Average accuracy:", np.mean(rf_scores))
-print("Standard deviation:", np.std(rf_scores))
+    forrest_cv_results.append(rf_scores)
+
+    print(f"\nn = {n}")
+    print("Average validation accuracy:", np.mean(rf_scores))
+    print("Standard deviation:", np.std(rf_scores))
 
 
 
